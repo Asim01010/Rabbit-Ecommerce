@@ -1,4 +1,8 @@
 import React from "react";
+import { IoLogoInstagram } from "react-icons/io";
+import { RiTwitterXLine } from "react-icons/ri";
+import { TbBrandMeta } from "react-icons/tb";
+import { FiPhoneCall } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -82,16 +86,46 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className=""></div>
-        <h3 className="text-lg text-gray-800 mb-4">Follow Us</h3>
-        <div className="flex items-center space-x-4 mb-6">
-          <a
-            href="https://www.facebook.com"
-            className="hover:text-gray-300"
-            target="_blank"
-            rel="noopner noreferrer"
-          ></a>
+        <div className="">
+          <h3 className="text-lg text-gray-800 mb-4">Follow Us</h3>
+          <div className="flex items-center space-x-4 mb-6">
+            <a
+              href="https://www.facebook.com"
+              className="hover:text-gray-300"
+              target="_blank"
+              rel="noopner noreferrer"
+            >
+              <TbBrandMeta />
+            </a>
+            <a
+              href="https://www.facebook.com"
+              className="hover:text-gray-300"
+              target="_blank"
+              rel="noopner noreferrer"
+            >
+              <IoLogoInstagram />
+            </a>
+            <a
+              href="https://www.facebook.com"
+              className="hover:text-gray-300"
+              target="_blank"
+              rel="noopner noreferrer"
+            >
+              <RiTwitterXLine />
+            </a>
+          </div>
+          <p className="text-gray-500">Call Us</p>
+          <p className="">
+            <FiPhoneCall className="mr-2 inline-block" />
+            012-345-678
+          </p>
         </div>
+      </div>
+      {/* footer bottom */}
+      <div className="container mx-autp mt-12 px-4 lg:px-0 border-t border-gray-200 pt-6">
+        <p className="text-gray-500 text-sm tracking-tigher text-center">
+          C 2015, CompileTab. All Right Reserved
+        </p>
       </div>
     </footer>
   );
