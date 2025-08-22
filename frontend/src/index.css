@@ -4,3 +4,6 @@
   font-optical-sizing: auto;
   font-style: normal;
 }
+.text-shadow {
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
