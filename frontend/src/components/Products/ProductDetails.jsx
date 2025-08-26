@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
+import ProductGrid from "./ProductGrid";
 
 const ProductDetails = () => {
   const selectedProduct = {
@@ -21,12 +23,37 @@ const ProductDetails = () => {
       },
     ],
   };
-
+  const similarProducts = [
+    {
+      _id: 1,
+      name: "product 1",
+      price: 100,
+      images: [{ url: "https://picsum.photos/500/500?random=3" }],
+    },
+    {
+      _id: 1,
+      name: "product 2",
+      price: 100,
+      images: [{ url: "https://picsum.photos/500/500?random=5" }],
+    },
+    {
+      _id: 1,
+      name: "product 3",
+      price: 100,
+      images: [{ url: "https://picsum.photos/500/500?random=6" }],
+    },
+    {
+      _id: 1,
+      name: "product 4",
+      price: 100,
+      images: [{ url: "https://picsum.photos/500/500?random=7" }],
+    },
+  ];
   const [mainImage, setMainImage] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
-
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   useEffect(() => {
     if (selectedProduct?.images?.length > 0) {
       setMainImage(selectedProduct.images[0].url);
@@ -41,7 +68,19 @@ const ProductDetails = () => {
     }
   };
 
-  const isButtonDisabled = !selectedColor || !selectedSize;
+  const handleAddToCart = () => {
+    if (!selectedColor || !selectedSize) {
+      toast.error("Please Select the Size and Color before Adding to Cart.");
+      return;
+    }
+    setIsButtonDisabled(true);
+    setTimeout(() => {
+      toast.success("Product Add to Cart!", {
+        duration: 1500,
+      });
+      setIsButtonDisabled(false);
+    }, 500);
+  };
 
   return (
     <div className="p-4 md:p-6">
@@ -168,14 +207,12 @@ const ProductDetails = () => {
 
             {/* Add to Cart */}
             <button
+              onClick={handleAddToCart}
               disabled={isButtonDisabled}
-              className={`py-3 px-6 rounded w-full mb-4 transition ${
-                isButtonDisabled
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-black text-white hover:bg-gray-900"
-              }`}
+              className={`py-3 px-6 rounded w-full mb-4 transition  text-white
+              ${isButtonDisabled ? "bg-gray-500" : "bg-black"}`}
             >
-              ADD TO CART
+              {isButtonDisabled ? "Adding..." : "Add To Cart"}
             </button>
 
             {/* Characteristics */}
@@ -196,6 +233,12 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="mt-20 px-36">
+        <h2 className="text-center text-2xl font-medium mb-4">
+          You May Also Like
+        </h2>
+        <ProductGrid products={similarProducts} />
       </div>
     </div>
   );
