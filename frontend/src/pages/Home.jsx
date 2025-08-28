@@ -4,6 +4,9 @@ import GenderCollectionSection from "../components/Products/GenderCollectionSect
 import NewArrival from "../components/Products/NewArrival";
 import ProductDetails from "../components/Products/ProductDetails";
 import ProductGrid from "../components/Products/ProductGrid";
+import FeaturedCollection from "../components/Products/FeaturedCollection";
+import FeaturesSection from "../components/Products/FeaturesSection";
+import DummyProduct from "../components/Products/DummyProduct";
 
 const Home = () => {
   const placeholderProducts = [
@@ -57,7 +60,7 @@ const Home = () => {
     },
   ];
   return (
-    <div>
+    <div className="">
       <Hero />
       <GenderCollectionSection />
       <NewArrival />
@@ -70,6 +73,9 @@ const Home = () => {
         </h2>
         <ProductGrid products={placeholderProducts} />
       </div>
+      <FeaturedCollection />
+      <FeaturesSection />
+      <DummyProduct />
     </div>
   );
 };
