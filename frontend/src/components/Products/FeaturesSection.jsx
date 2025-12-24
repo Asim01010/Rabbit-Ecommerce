@@ -12,7 +12,7 @@ const FeaturesSection = () => {
         {/* feature 1 */}
         <div
           className="flex flex-col items-center p-6 rounded-lg transition cursor-pointer 
-                        bg-white hover:bg-gradient-to-r hover:from-pink-400 hover:via-purple-500 hover:to-blue-500 hover:text-white"
+                        bg-white hover:bg-gradient-to-r"
         >
           <div className="p-4 rounded-full mb-4">
             <HiShoppingBag className="text-2xl text-gray-500" />
@@ -24,7 +24,7 @@ const FeaturesSection = () => {
         {/* feature 2 */}
         <div
           className="flex flex-col items-center p-6 rounded-lg transition cursor-pointer 
-                        bg-white hover:bg-gradient-to-r hover:from-pink-400 hover:via-purple-500 hover:to-blue-500 hover:text-white"
+                        bg-white hover:bg-gradient-to-r"
         >
           <div className="p-4 rounded-full mb-4">
             <HiArrowPathRoundedSquare className="text-2xl text-gray-500" />
@@ -36,7 +36,7 @@ const FeaturesSection = () => {
         {/* feature 3 */}
         <div
           className="flex flex-col items-center p-6 rounded-lg transition cursor-pointer 
-                        bg-white hover:bg-gradient-to-r hover:from-pink-400 hover:via-purple-500 hover:to-blue-500 hover:text-white"
+                        bg-white hover:bg-gradient-to-r"
         >
           <div className="p-4 rounded-full mb-4">
             <HiOutlineCreditCard className="text-3xl text-gray-500" />

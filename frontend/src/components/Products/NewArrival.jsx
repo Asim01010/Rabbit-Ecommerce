@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 
 const NewArrival = () => {
   const scrollRef = useRef(null);
+  const [isDragging,setIsDragging] = useState(false);
+  const [startX,setStartX] = useState(0);
+  const [scrollLeft,setScrollLeft] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
@@ -98,40 +101,51 @@ const NewArrival = () => {
     },
   ];
 
-  const updateScrollButtons = () => {
-    const container = scrollRef.current;
-    if (!container) return;
-    setCanScrollLeft(container.scrollLeft > 0);
-    setCanScrollRight(
-      container.scrollLeft + container.clientWidth < container.scrollWidth
-    );
-  };
+  const handleMouseDown = (e)=>{
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetleft);
+    setScrollLeft(scrollRef.current.scrollLeft)
+  }
+  const handleMouseMove = (e)=>{
+  if(!isDragging) return;
+  const x = e.pageX - scrollRef.current.offsetLeft;
+  const walk = x - startX;
+  scrollRef.current.scrollLeft = scrollLeft - walk;
+  }
+  const handleMouseUpOrLeave = ()=>{
+setIsDragging(false);
+  }
 
   const scroll = (direction) => {
-    const container = scrollRef.current;
-    if (!container) return;
-    const scrollAmount = container.clientWidth * 0.9; // scroll ~90% width
-    container.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
+   const scrollAmount = direction === "left" ? -300 : 300;// scroll ~90% width
+    scrollRef.current.scrollBy({
+      left: scrollAmount,
       behavior: "smooth",
     });
   };
+  const updateScrollButtons = () => {
+    const container = scrollRef.current;
+   if(container){
+    const leftScroll = container.scrollLeft;
+    const rightScrollable = container.scrollWidth > leftScroll + container.clientWidth;
+    setCanScrollLeft(leftScroll > 0);
+    setCanScrollRight(rightScrollable);
+   }
+  };
+
 
   useEffect(() => {
     const container = scrollRef.current;
     if (container) {
       container.addEventListener("scroll", updateScrollButtons);
       updateScrollButtons();
+      return ()=> container.removeEventListener("scroll",updateScrollButtons);
     }
-    return () => {
-      if (container) {
-        container.removeEventListener("scroll", updateScrollButtons);
-      }
-    };
+  
   }, []);
 
   return (
-    <section>
+    <section className="py-16 px-4 lg:px-0">
       <div className="container mx-auto text-center mb-10 relative">
         <h2 className="text-3xl font-bold mb-4">Explore New Arrivals</h2>
         <p className="text-lg text-gray-600 mb-8">
@@ -140,24 +154,28 @@ const NewArrival = () => {
         </p>
 
         {/* Scroll Buttons */}
-        <div className="absolute right-0 bottom-[-30px] flex space-x-2">
+        <div className="absolute right-0 bottom-[-35px] flex space-x-2">
           <button
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
-            className={`p-2 rounded border bg-white text-black shadow ${
-              !canScrollLeft ? "opacity-40 cursor-not-allowed" : ""
+            className={`p-2 rounded border  ${
+              canScrollLeft
+                ? "bg-white text-black"
+                : "bg-gray-200 text-gray-400 cursor-not-allowed"
             }`}
           >
-            <FiChevronLeft />
+            <FiChevronLeft className="text-xl" />
           </button>
           <button
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
-            className={`p-2 rounded border bg-white text-black shadow ${
-              !canScrollRight ? "opacity-40 cursor-not-allowed" : ""
+            className={`p-2 rounded border  ${
+              canScrollRight
+                ? "bg-white text-black"
+                : "bg-gray-200 text-gray-400 cursor-not-allowed"
             }`}
           >
-            <FiChevronRight />
+            <FiChevronRight className="text-xl" />
           </button>
         </div>
       </div>
@@ -165,29 +183,35 @@ const NewArrival = () => {
       {/* Scroll Content */}
       <div
         ref={scrollRef}
-        className="container mx-auto overflow-x-auto flex space-x-6 scroll-smooth"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUpOrLeave}
+        onMouseLeave={handleMouseUpOrLeave}
+        className={`container mx-auto overflow-x-auto flex space-x-6 scroll-smooth ${
+          isDragging ? "cursor-grabbing" : "cursor-grab"
+        }`}
         style={{ scrollbarWidth: "none" }}
       >
         {newArrivals.map((item) => (
           <div
             key={item.id}
-            className="min-w-full sm:min-w-[50%] lg:min-w-[30%] rounded-lg overflow-hidden shadow flex-shrink-0"
+            className="min-w-[100%] sm:min-w-[50%] lg:min-w-[30%] relative"
           >
             {/* Card content stacked */}
-            <div className="relative">
-              <img
-                src={item.images[0]?.url}
-                alt={item.images[0]?.altText || item.name}
-                className="w-full h-[400px] object-cover"
-              />
 
-              {/* Overlay inside same card */}
-              <div className="absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-md text-white p-4">
-                <Link to={`/product/${item.id}`} className="block">
-                  <h1 className="font-medium text-lg">{item.name}</h1>
-                  <p className="font-semibold">${item.price}</p>
-                </Link>
-              </div>
+            <img
+              src={item.images[0]?.url}
+              alt={item.images[0]?.altText || item.name}
+              className="w-full h-[500px] object-cover rounded-lg"
+              draggable="false"
+            />
+
+            {/* Overlay inside same card */}
+            <div className="absolute bottom-0 left-0 right-0 bg-white/10 backdrop-blur-sm text-black p-4 rounded-b-lg">
+              <Link to={`/product/${item.id}`} className="block">
+                <h1 className="font-medium">{item.name}</h1>
+                <p className="font-semibold">${item.price}</p>
+              </Link>
             </div>
           </div>
         ))}

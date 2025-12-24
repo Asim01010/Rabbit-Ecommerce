@@ -55,13 +55,13 @@ const MyOrderPage = () => {
         <table className="min-w-full text-left text-gray-500">
           <thead className="bg-gray-100 text-xs uppercase text-gray-700">
             <tr>
-              <th className="px-4 py-3">Image</th>
-              <th className="px-4 py-3">Order Id</th>
-              <th className="px-4 py-3">Created</th>
-              <th className="px-4 py-3">Shipping Address</th>
-              <th className="px-4 py-3">Items</th>
-              <th className="px-4 py-3">Price</th>
-              <th className="px-4 py-3">Status</th>
+              <th className="px-4 py-2 sm:py-3">Image</th>
+              <th className="px-4 py-2 sm:py-3">Order Id</th>
+              <th className="px-4 py-2 sm:py-3">Created</th>
+              <th className="px-4 py-2 sm:py-3">Shipping Address</th>
+              <th className="px-4 py-2 sm:py-3">Items</th>
+              <th className="px-4 py-2 sm:py-3">Price</th>
+              <th className="px-4 py-2 sm:py-3">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -69,18 +69,19 @@ const MyOrderPage = () => {
               orders.map((order) => (
                 <tr
                   key={order._id}
-                  className="border-b bg-white hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-blue-500 hover:text-white transition-colors duration-300 cursor-pointer"
+                  className="border-b hover:border-gray-50 cursor-pointer"
                 >
-                  <td className="py-2 px-2 sm:p-4">
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">
                     <img
                       src={order.orderItems[0].Image}
                       alt={order.orderItems[0].name}
                       className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-lg"
                     />
                   </td>
-                  <td className="px-4 py-2">{order._id}</td>
+                  <td className="px-2 py-2 sm:px-4 sm:py-4 whitespace-nowrap">{order._id}</td>
                   <td className="px-4 py-2">
-                    {new Date(order.createdAt).toLocaleDateString()}
+                    {new Date(order.createdAt).toLocaleDateString()}{" "}
+                    {new Date(order.createdAt).toLocaleTimeString()}
                   </td>
                   <td className="px-4 py-2">
                     {order.shippingAddress.street}, {order.shippingAddress.city}
@@ -95,7 +96,7 @@ const MyOrderPage = () => {
                         order.status === "Shipped"
                           ? "bg-green-100 text-green-700"
                           : "bg-yellow-100 text-yellow-700"
-                      } px-2 py-1 rounded-full text-xs font-semibold`}
+                      } px-2 py-1 rounded-md text-xs font-semibold`}
                     >
                       {order.status}
                     </span>

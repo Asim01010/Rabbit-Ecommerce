@@ -4,7 +4,7 @@ import ProductGrid from "./ProductGrid";
 
 const ProductDetails = () => {
   const selectedProduct = {
-    name: "Stylish Jacket",
+    name: "Stylish Jacket",  
     originalPrice: 150,
     discountedPrice: 120,
     description: "This is a stylish Jacket perfect for any occasion",
@@ -84,7 +84,7 @@ const ProductDetails = () => {
 
   return (
     <div className="p-4 md:p-6">
-      <div className="max-w-6xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow">
+      <div className="max-w-6xl mx-auto bg-white p-6 md:p-8 ">
         <div className="flex flex-col md:flex-row">
           {/* Left Thumbnails */}
           <div className="hidden md:flex flex-col space-y-4 mr-6">
@@ -138,10 +138,10 @@ const ProductDetails = () => {
             </h1>
 
             <p className="text-lg text-gray-500 mb-1 line-through">
-              ${selectedProduct.originalPrice}
+              $ {selectedProduct.originalPrice}
             </p>
             <p className="text-2xl text-black font-bold mb-3">
-              ${selectedProduct.discountedPrice}
+              $ {selectedProduct.discountedPrice}
             </p>
 
             <p className="text-gray-600 mb-4">{selectedProduct.description}</p>
@@ -154,13 +154,18 @@ const ProductDetails = () => {
                   <button
                     key={color}
                     onClick={() => setSelectedColor(color)}
-                    className={`w-8 h-8 rounded-full border-2 transition ${
+                    className={`w-8 h-8 rounded-full border-2 border-gray-400 transition ${
                       selectedColor === color
                         ? "border-black scale-110"
                         : "border-gray-300"
                     }`}
-                    style={{ backgroundColor: color.toLowerCase() }}
-                  ></button>
+                    style={{ backgroundColor: color.toLowerCase(),
+                      filter: "brightness(0.5)"
+                     }}
+                  >
+           
+                  </button>
+                  
                 ))}
               </div>
             </div>
@@ -210,11 +215,11 @@ const ProductDetails = () => {
               onClick={handleAddToCart}
               disabled={isButtonDisabled}
               className={`py-3 px-6 rounded w-full mb-4 transition  text-white
-              ${isButtonDisabled ? "bg-gray-500" : "bg-black"}`}
+              ${isButtonDisabled ? "bg-gray-500 cursor-not-allowed opacity-50" : "bg-black"}`}
             >
               {isButtonDisabled ? "Adding..." : "Add To Cart"}
             </button>
-
+ 
             {/* Characteristics */}
             <div className="mt-8 text-gray-700">
               <h3 className="text-xl font-bold mb-4">Characteristics:</h3>
@@ -233,12 +238,12 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="mt-20 px-36">
+      <div className="mt-20 ">
         <h2 className="text-center text-2xl font-medium mb-4">
           You May Also Like
         </h2>
         <ProductGrid products={similarProducts} />
+      </div>
       </div>
     </div>
   );

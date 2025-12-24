@@ -23,7 +23,7 @@ const Login = () => {
           <p className="text-center mb-6">
             Enter your username and password to Login
           </p>
-          <div className="mb-">
+          <div className="mb-4">
             <label htmlFor="" className="block text-sm font-semibold mb-2">
               Email
             </label>
@@ -63,7 +63,7 @@ const Login = () => {
       </div>
       <div className="hidden w-1/2 md:block bg-gray-800">
         <div className="h-full flex flex-col justify-center items-center">
-          <img src={login} alt="" className="h-[750px] w-full object-cover" />
+          <img src={login} alt=" Login to Account" className="h-[750px] w-full object-cover" />
         </div>
       </div>
     </div>
